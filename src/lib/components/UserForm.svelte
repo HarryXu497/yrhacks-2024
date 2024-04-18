@@ -1,12 +1,9 @@
 <script lang="ts">
-	
-	export let usernameField = false;
 	export let error: string | null = null;
 </script>
 
 <form class="form" on:submit|preventDefault>
-	<slot>
-	</slot>
+	<slot></slot>
 
 	{#if error}
 		<div class="form-error">

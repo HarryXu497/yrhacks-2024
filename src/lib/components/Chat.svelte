@@ -1,26 +1,58 @@
 <script lang="ts">
   	import type IMessage from "$lib/models/Message.model";
+  	import { onMount } from "svelte";
   	import Message from "./Message.svelte";
 
 	export let messages: IMessage[];
 	export let userId: string;
-
+	
 	export let text = "";
 	let outlined = true;
+	let charElement: HTMLUListElement;
+	let lastMessage: HTMLLIElement;
 
+	onMount(() => {
+		scrollToBottom();
+	})
+
+	const scrollToBottom = () => {
+		if (!lastMessage) {
+			return;
+		}
+
+		console.log("HERE")
+		lastMessage.scrollIntoView();
+	}
+
+	$: {
+		messages = messages;
+		console.log(lastMessage)
+		scrollToBottom();
+	}
 </script>
 
 <section class="chat">
-	<ul class="message-list">
+	<ul class="message-list" bind:this={charElement}>
 		{#each messages as message, i}
+		{#if i === messages.length - 1}
+			<li bind:this={lastMessage}>
+				{#if i >= 1}
+					{@const prev = messages[i - 1].senderId === message.senderId}
+					<Message message={message} userId={userId} collapseName={prev}/>
+				{:else}
+					<Message message={message} userId={userId}/>
+				{/if}
+			</li>
+		{:else}
 		<li>
-			{#if i > 1}
+			{#if i >= 1}
 				{@const prev = messages[i - 1].senderId === message.senderId}
 				<Message message={message} userId={userId} collapseName={prev}/>
 			{:else}
 				<Message message={message} userId={userId}/>
 			{/if}
 		</li>
+		{/if}
 		{/each}
 	</ul>
 	<form class="input-form" on:submit|preventDefault>

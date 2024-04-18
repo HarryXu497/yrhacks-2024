@@ -9,11 +9,13 @@
   	import Card from '$lib/components/Card.svelte';
 	
 	export let data: PageServerData;
-	let messages: IMessage[] = [];
+	let messages: (IMessage | null)[] = [];
 	let userId: string;
 	let course: string;
 
 	let text: string;
+
+	$: filteredMessages = <IMessage[]> messages.filter(message => !!message); 
 
 	async function onSubmit() {
 		if (!$authStore.currentUser?.uid) {
@@ -61,6 +63,10 @@
 		onSnapshot(q, querySnapshot => {
 			messages = querySnapshot.docs.map(snap => {
 				const data = snap.data();
+
+				if (!data.sentAt) {
+					return null;
+				}
 				
 				return ({
 					senderId: data.senderId,
@@ -77,10 +83,10 @@
 <main class="chat">
 	<Card>
 		<div class="chat__content">
-			{#if $authStore && messages.length}
+			{#if $authStore}
 				<h1>{course?.toUpperCase()}</h1>
 				<Chat
-					{messages}
+					messages={filteredMessages}
 					{userId}
 					bind:text={text}
 					on:submit={onSubmit}

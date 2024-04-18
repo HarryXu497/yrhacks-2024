@@ -20,8 +20,7 @@
 
 		const q = query(
 			classRef,
-			where("course", ">=", search),
-			where("course", "<", search.substring(0, search.length - 1) + String.fromCharCode(search.charCodeAt(search.length - 1) + 1)),
+			where("course", "==", search),
 		);
 
 		const classes = (await getDocs(q)).docs;
@@ -70,7 +69,9 @@
 			const classDocRef = room.ref;
 			const classDoc = (await getDoc(classDocRef)).data()!;
 			const members = classDoc.members as string[];
-			members.push(uid);
+			if (!members.includes(uid)) {
+				members.push(uid);
+			}
 
 			await updateDoc(classDocRef, {
 				members,
@@ -80,11 +81,47 @@
 			break;
 		}
 
-		goto(`/room/${roomId}`)
+		goto(`/room/${roomId}`);
 	}
 </script>
 
-<form on:submit|preventDefault={onSubmit}>
+<form on:submit|preventDefault={onSubmit} class="search-bar">
 	<input type="text" bind:value={text}>
-	<button type="submit">Submit</button>
+	<button type="submit">
+		<i class="ri-search-line"></i>
+	</button>
 </form>
+
+<style lang="scss">
+	.search-bar {
+		width: clamp(32rem, 40%, 42rem);
+		margin: 0 auto;
+
+		display: flex;
+		flex-direction: row;
+
+		margin-top: 2rem;
+
+		border: 2px solid black;
+		border-radius: 8px;
+
+	}
+	
+	.search-bar input {
+		all: unset;
+		
+		padding: 0.5rem 0.25rem;
+		flex-grow: 1;
+		font-size: 1.25rem;
+	}
+
+	.search-bar button {
+		all: unset;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		padding: 0.25rem 0.75rem;
+		font-size: 1.25rem;
+	}
+</style>
