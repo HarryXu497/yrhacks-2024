@@ -147,9 +147,8 @@
 
 <style lang="scss">
 	.video {
-		width: clamp(40rem, 80%, 84rem);
+		width: clamp(40rem, 80%, 48rem);	
 		display: grid;
-		
 		grid-template-columns: repeat(var(--columns), 1fr);
 
 		margin: 0 auto;
