@@ -80,7 +80,7 @@
 	<Card>
 		<h1>Sign Up</h1>
 
-		<UserForm on:submit={onSignIn} bind:error={error} usernameField={true}>
+		<UserForm on:submit={onSignIn} bind:error={error}>
 			{#if page === 'credential'}
 				<div class="form-group">
 					<label for="email">Email</label>
