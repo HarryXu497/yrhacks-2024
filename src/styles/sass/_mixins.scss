@@ -1,0 +1,16 @@
+@mixin button($color: inherit, $text-color: inherit) {
+	display: block;
+	background-color: $color;
+	color: $text-color;
+	border: 1px solid black;
+	border-radius: 8px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
