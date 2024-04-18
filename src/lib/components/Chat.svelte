@@ -7,6 +7,7 @@
 	export let userId: string;
 	
 	export let text = "";
+	export let latex = false;
 	let outlined = true;
 	let charElement: HTMLUListElement;
 	let lastMessage: HTMLLIElement;
@@ -20,13 +21,12 @@
 			return;
 		}
 
-		console.log("HERE")
 		lastMessage.scrollIntoView();
 	}
 
 	$: {
 		messages = messages;
-		console.log(lastMessage)
+
 		scrollToBottom();
 	}
 </script>
@@ -56,6 +56,15 @@
 		{/each}
 	</ul>
 	<form class="input-form" on:submit|preventDefault>
+		<button type="button"
+			on:click={() => latex = !latex}
+		>
+			{#if latex}
+				<i class="ri-slideshow-2-fill"></i>
+			{:else}
+				<i class="ri-slideshow-2-line"></i>
+			{/if}
+		</button>
 		<input type="text" bind:value={text}>
 		<button type="reset"
 			on:mouseenter={() => outlined = false}

@@ -13,6 +13,7 @@ const peerServer = ExpressPeerServer(server, {
 	debug: true,
 	key: "peerjs",
 	allow_discovery: true,
+	alive_timeout: 10000,
 	corsOptions: {
 		origin: "http://localhost:5173"
 	},

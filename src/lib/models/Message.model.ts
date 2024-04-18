@@ -3,4 +3,5 @@ export default interface IMessage {
 	senderName: string;
 	text: string;
 	sentAt: Date;
+	latex?: boolean;
 }

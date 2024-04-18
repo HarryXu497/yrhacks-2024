@@ -14,6 +14,7 @@
 	let course: string;
 
 	let text: string;
+	let latex: boolean = false;
 
 	$: filteredMessages = <IMessage[]> messages.filter(message => !!message); 
 
@@ -33,6 +34,7 @@
 			senderName: $authStore.currentUser?.displayName,
 			text,
 			sentAt: serverTimestamp(),
+			latex: latex,
 		});
 
 		text = "";
@@ -73,22 +75,45 @@
 					senderName: data.senderName,
 					text: data.text,
 					sentAt: data.sentAt.toDate(),
+					latex: data?.latex || false,
 				}) as IMessage;
 			});
 		})
 	});
 
+	let hover = false;
+
+	function refresh() {
+		location.reload();
+
+		window.location.href = `/room/${data.classId}/call`;
+	}
 </script>
+
+<svelte:head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.css" integrity="sha384-K1E1xaIzoWihlXfiT5fcmLNabsnrl+dqc0errnRwtMX14tKRA9cCYNDGnXiHEZMs" crossorigin="anonymous">
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.js" integrity="sha384-IolEJdmwZJpJkyCvXBnmGt8wXcP3nvRjxBjPv7/PWW7oODJhZ+qiY1sDpwgjcKLT" crossorigin="anonymous"></script>
+</svelte:head>
 
 <main class="chat">
 	<Card>
 		<div class="chat__content">
 			{#if $authStore}
-				<h1>{course?.toUpperCase()}</h1>
+				<div class="topbar">
+					<h1>{course?.toUpperCase()}</h1>
+					<button on:click={refresh} on:mouseenter={() => hover = true} on:mouseleave={() => hover = false}>
+						{#if hover}
+							<i class="ri-phone-fill"></i>
+						{:else}
+							<i class="ri-phone-line"></i>
+						{/if}
+					</button>
+				</div>
 				<Chat
 					messages={filteredMessages}
 					{userId}
 					bind:text={text}
+					bind:latex={latex}
 					on:submit={onSubmit}
 					/>
 			{:else}
@@ -105,6 +130,34 @@
 		margin-top: 2rem;
 	}
 
+	.topbar {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 0.5rem;
+
+		h1 {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+	
+	.topbar button {
+		all: unset;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		font-size: 1.75rem;
+
+		&:hover {
+			cursor: pointer
+		}
+	}
+
 	.loading {
 		display: flex;
 		flex-direction: column;
@@ -117,7 +170,6 @@
 
 	h1 {
 		font-weight: bold;
-		margin-bottom: 1rem;
 	}
 
 	.chat__content {

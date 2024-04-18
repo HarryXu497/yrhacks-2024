@@ -1,5 +1,6 @@
 <script lang="ts">
   	import type IMessage from "$lib/models/Message.model";
+  	import Katex from "./Katex.svelte";
 
 	export let message: IMessage;
 	export let userId: string
@@ -13,7 +14,11 @@
 	{#if !collapseName}
 		<h3>{message.senderName}</h3>
 	{/if}
-	<p>{message.text}</p>
+	{#if message.latex}
+		<p><Katex math={message.text}/></p>
+	{:else}
+		<p>{message.text}</p>
+	{/if}
 </div>
 
 <style lang="scss">

@@ -1,5 +1,7 @@
 <script lang="ts">
   	import { authStore, logOut } from "$lib/stores/authStore";
+
+	export let search = false
 </script>
 
 <nav class="navbar">
@@ -7,6 +9,9 @@
 		<a href="/">StudyLine</a>
 	</div>
 	<div class="navbar__links">
+		{#if search}
+			<a href="/search" class="outline">Search Subjects</a>
+		{/if}
 		{#if $authStore.currentUser}
 			{#if $authStore.currentUser.displayName}
 				<em>{$authStore.currentUser.displayName}</em>
@@ -49,5 +54,11 @@
 		flex-direction: row;
 		justify-content: space-between;
 		gap: 2rem;
+	}
+
+	a.outline {
+		outline: 2px solid black;
+		outline-offset: 8px;
+		border-radius: 5px;
 	}
 </style>
