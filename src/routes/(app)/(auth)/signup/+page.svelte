@@ -32,7 +32,7 @@
 		}
 
 		if (grade && (grade < 1 || grade > 15)) {
-			error = "Invlid grade";
+			error = "Invalid grade";
 			return;
 		}
 
