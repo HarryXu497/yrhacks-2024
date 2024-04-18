@@ -1,10 +1,8 @@
 <script lang="ts">
-  	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
 	import { firestore } from "$lib/firebase";
-	import { setDoc, doc, collection, getDoc, query, onSnapshot, getDocs, orderBy, addDoc, Firestore, serverTimestamp } from "firebase/firestore";
+	import { doc, collection, getDoc, query, onSnapshot, getDocs, orderBy, addDoc, Firestore, serverTimestamp } from "firebase/firestore";
 	import { authStore } from '$lib/stores/authStore';
-	import type { Writable } from 'svelte/store';
   	import { goto } from '$app/navigation';
   	import Chat from '$lib/components/Chat.svelte';
   	import type IMessage from '$lib/models/Message.model';
