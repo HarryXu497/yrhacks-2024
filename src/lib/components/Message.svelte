@@ -7,8 +7,8 @@
 </script>
 
 <div class="message"
-	class:align-right={message.senderId === userId}
-	class:align-left={message.senderId !== userId}
+	class:align-left={message.senderId === userId}
+	class:align-right={message.senderId !== userId}
 >
 	{#if !collapseName}
 		<h3>{message.senderName}</h3>
@@ -24,6 +24,7 @@
 
 	.message h3 {
 		font-weight: bold;
+		margin-top: 0.5rem;
 	}
 
 	.align-left {

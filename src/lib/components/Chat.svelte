@@ -43,11 +43,25 @@
 		display: flex;
 		flex-direction: column;
 		height: 100%;
+		gap: 2rem;
 	}
 
 	.message-list {
 		flex-grow: 1;
+		overflow-y: scroll;
+
+		border: 2px solid black;
+		border-radius: 8px;
+		font-size: 1.125rem;
+		padding: 0.25rem 0.5rem;
+
+		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
 	}
+
+	.message-list::-webkit-scrollbar {
+		width: 0px;
+	}
+
 
 	.input-form {
 		display: flex;
@@ -56,6 +70,8 @@
 		border: 2px solid black;
 		border-radius: 8px;
 		font-size: 1.125rem;
+
+		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
 
 		&:focus-within {
 			outline: 1px solid black;

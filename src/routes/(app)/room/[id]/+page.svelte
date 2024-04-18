@@ -22,6 +22,10 @@
 			return;
 		}
 
+		if (!text.trim()) {
+			return;
+		}
+
 		const messagesRef = collection(firestore, "classes", data.classId, "messages");
 
 		await addDoc(messagesRef, {
