@@ -85,7 +85,7 @@
 
 	function refresh() {
 		location.reload();
-
+		
 		window.location.href = `/room/${data.classId}/call`;
 	}
 </script>

@@ -117,7 +117,7 @@
 	}
 
 	function cols(size: number) {
-		if (size === 1) {
+		if (size <= 1) {
 			return 1;
 		}
 
@@ -132,7 +132,7 @@
 
 </script>
 
-<main class="video" style="--columns={columns};">
+<main class="video" style="--columns: {columns};">
 	{#if !Object.entries(peerConnections).length }
 		<div>
 			Waiting for other users {".".repeat(numPeriods + 1)}
@@ -158,7 +158,7 @@
 	}
 
 	.video video {
-		width: 50%;
+		width: 100%;
 		border: 2px solid black;
 		border-radius: 8px;
 		margin: 0 auto;
