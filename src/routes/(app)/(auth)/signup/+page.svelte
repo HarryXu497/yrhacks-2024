@@ -31,6 +31,11 @@
 			return;
 		}
 
+		if (grade && (grade < 1 || grade > 15)) {
+			error = "Invlid grade";
+			return;
+		}
+
 		let credentials: UserCredential;
 
 		try {
